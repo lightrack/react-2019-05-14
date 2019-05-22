@@ -30,3 +30,15 @@ describe("when show RestaurantList", () => {
     );
   });
 });
+
+describe("when click on Show reviews in Restaurant", () => {
+  it("should open reviews", () => {
+    const wrapper = mount(<App restaurants={restaurants} />);
+    wrapper
+      .find('[data-automation-id="toggle-reviews"]')
+      .at(0)
+      .simulate("click");
+
+    expect(wrapper.find('[data-automation-id="reviewList"]').length).toEqual(1);
+  });
+});
