@@ -6,6 +6,8 @@ import ReviewList from "../review-list";
 import { toggleVisibility } from "../../decorators/toggleVisibility";
 import * as PropTypes from "prop-types";
 import "./restaurant.css";
+import { connect } from "react-redux";
+import { createReviewSelector } from "../../selectors";
 
 class Restaurant extends PureComponent {
   state = {
@@ -23,7 +25,7 @@ class Restaurant extends PureComponent {
       image,
       name,
       menu,
-      reviews,
+      reviews_: reviews,
       isMenuOpen,
       isOpen: isReviewOpen,
       toggleVisibility
@@ -81,4 +83,24 @@ Restaurant.propTypes = {
   toggleVisibility: PropTypes.func.isRequired
 };
 
-export default toggleVisibility(Restaurant);
+const initMapStateToProps = () => {
+  const reviewSelector = createReviewSelector();
+
+  return (state, ownProps) => {
+    // get reviews
+    let aReviews = [];
+    for (let i = 0; i < ownProps.reviews.length; i++) {
+      for (let j = 0; j < state.reviews.length; j++) {
+        if (ownProps.reviews[i] === state.reviews[j].id) {
+          aReviews.push(state.reviews[j]);
+        }
+      }
+    }
+
+    return {
+      reviews_: aReviews
+    };
+  };
+};
+
+export default connect(initMapStateToProps)(toggleVisibility(Restaurant));

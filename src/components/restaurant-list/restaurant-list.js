@@ -38,8 +38,8 @@ RestaurantList.propTypes = {
     PropTypes.shape({
       image: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      menu: PropTypes.array.isRequired,
-      reviews: PropTypes.array.isRequired
+      menu: PropTypes.arrayOf(PropTypes.string).isRequired,
+      reviews: PropTypes.arrayOf(PropTypes.string).isRequired
     })
   ).isRequired,
 
