@@ -16,7 +16,7 @@ import "./restaurant-menu.css";
 function RestaurantMenu(props) {
   useEffect(() => {
     if (!props.isDishesLoading && !props.isDishesLoaded) {
-      props.loadDishes();
+      props.loadDishes(props.id);
     }
     if (!props.isRestaurantLoading && !props.isRestaurantLoaded) {
       props.loadRestaurants();

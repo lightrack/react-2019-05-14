@@ -67,10 +67,20 @@ export const loadUsers = () => ({
   callAPI: "http://localhost:3001/api/users"
 });
 
-export const loadDishes = () => ({
-  type: LOAD_DISHES,
-  callAPI: "http://localhost:3001/api/dishes"
-});
+export const loadDishes = id => (dispatch, getState) => {
+  const state = getState();
+  if (!state.dishes.loaded && !state.dishes.loading) {
+    dispatch({ type: LOAD_DISHES + START });
+    fetch(`http://localhost:3001/api/dishes?id=${id}`)
+      .then(res => res.json())
+      .then(data => {
+        dispatch({ type: LOAD_DISHES + SUCCESS, response: data });
+      })
+      .catch(e => {
+        dispatch({ type: LOAD_REVIEWS + FAIL, error: e });
+      });
+  }
+};
 
 export const loadAllDataForReviews = () => (dispatch, getState) => {
   const state = getState();

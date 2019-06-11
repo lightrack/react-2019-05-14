@@ -22,8 +22,8 @@ class RestaurantsMap extends Component {
       this.props.loadRestaurants();
     }
     this.map = Leaflet.map(this.div, {
-      center: [51.51847684708113, -0.13999606534701844],
-      zoom: 12
+      center: [51.51447684708113, -0.13799606534701844],
+      zoom: 14
     });
     Leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
