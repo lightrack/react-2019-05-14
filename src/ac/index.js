@@ -11,8 +11,10 @@ import {
   LOAD_DISHES,
   START,
   SUCCESS,
-  FAIL
+  FAIL,
+  SEND_ORDER
 } from "../constants";
+import { cartSelector } from "../selectors";
 
 export const increase = () => ({
   type: INCREMENT
@@ -92,4 +94,14 @@ export const loadAllDataForReviews = () => (dispatch, getState) => {
       })
       .catch(e => dispatch({ type: LOAD_USERS + FAIL, error: e }));
   }
+};
+
+export const sendOrder = order => (dispatch, getState) => {
+  dispatch({
+    type: SEND_ORDER,
+    payload: {
+      ...order,
+      dishes: cartSelector(getState())
+    }
+  });
 };

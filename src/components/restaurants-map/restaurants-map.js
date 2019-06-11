@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Leaflet from "leaflet";
-import * as PropTypes from "prop-types";
 import "./restaurant-map.css";
 import { connect } from "react-redux";
 import {
+  restaurantSelector,
   restaurantsLoadedSelector,
   restaurantsLoadingSelector,
   restaurantsSelector
@@ -18,7 +18,7 @@ class RestaurantsMap extends Component {
     this.div = ref;
   };
   componentDidMount() {
-    if (!this.props.isRestaurantLoading && !this.props.isRestaurantLoaded) {
+    if (!this.props.isRestaurantsLoading && !this.props.isRestaurantLoaded) {
       this.props.loadRestaurants();
     }
     this.map = Leaflet.map(this.div, {
@@ -35,21 +35,27 @@ class RestaurantsMap extends Component {
     this.renderTiles();
   }
   renderTiles = () => {
-    this.props.restaurants.forEach(({ location: { lat, lng } }) => {
+    if (this.props.restaurant) {
+      const {
+        location: { lat, lng }
+      } = this.props.restaurant;
       Leaflet.marker([lat, lng]).addTo(this.map);
-    });
+    } else {
+      this.props.restaurants.forEach(({ location: { lat, lng } }) => {
+        Leaflet.marker([lat, lng]).addTo(this.map);
+      });
+    }
   };
 }
 
 export default connect(
-  state => (
-    {
-      restaurants: restaurantsSelector(state),
-      isRestaurantLoading: restaurantsLoadingSelector(state),
-      isRestaurantLoaded: restaurantsLoadedSelector(state)
-    },
-    {
-      loadRestaurants
-    }
-  )
+  (state, ownProps) => ({
+    restaurant: restaurantSelector(state, ownProps),
+    restaurants: restaurantsSelector(state),
+    isRestaurantsLoading: restaurantsLoadingSelector(state),
+    isRestaurantsLoaded: restaurantsLoadedSelector(state)
+  }),
+  {
+    loadRestaurants
+  }
 )(RestaurantsMap);

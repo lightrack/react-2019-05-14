@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Form, Input, Button } from "antd";
 import "./user-form.css";
+import { sendOrder } from "../../ac";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class UserForm extends Component {
   state = {
@@ -62,8 +65,12 @@ class UserForm extends Component {
 
   submit = e => {
     e.preventDefault();
-    console.log(this.state);
+    this.props.sendOrder(this.state);
+    this.props.history.push("/order-complete");
   };
 }
 
-export default UserForm;
+export default connect(
+  null,
+  { sendOrder }
+)(withRouter(UserForm));
