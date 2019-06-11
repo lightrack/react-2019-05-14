@@ -11,6 +11,7 @@ import OrderPage from "./components/routes/order";
 import OrderCompletePage from "./components/routes/order-complete";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./history";
+import AppMenu, { AppMenuItem } from "./components/app-menu";
 
 const { Header, Content, Footer } = Layout;
 
@@ -19,22 +20,11 @@ function App() {
     <ConnectedRouter history={history}>
       <Layout className="App">
         <Header className="header">
-          <Menu theme="dark" mode="horizontal" style={{ lineHeight: "64px" }}>
-            <Menu.Item>
-              <NavLink to={"/restaurants"} activeStyle={{ color: "lightgrey" }}>
-                List
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item>
-              <NavLink
-                to={"/restaurant-map"}
-                activeStyle={{ color: "lightgrey" }}
-              >
-                Map
-              </NavLink>
-            </Menu.Item>
-            <CartBadge />
-          </Menu>
+          <AppMenu>
+            <AppMenuItem to={"/restaurants"}>List</AppMenuItem>
+            <AppMenuItem to={"/restaurant-map"}>Map</AppMenuItem>
+          </AppMenu>
+          <CartBadge />
         </Header>
         <Content>
           <Switch>
