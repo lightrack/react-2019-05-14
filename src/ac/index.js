@@ -74,10 +74,12 @@ export const loadDishes = id => (dispatch, getState) => {
     fetch(`http://localhost:3001/api/dishes?id=${id}`)
       .then(res => res.json())
       .then(data => {
-        dispatch({ type: LOAD_DISHES + SUCCESS, response: data });
+        data.error
+          ? dispatch({ type: LOAD_DISHES + FAIL, error: data.error })
+          : dispatch({ type: LOAD_DISHES + SUCCESS, response: data });
       })
       .catch(e => {
-        dispatch({ type: LOAD_REVIEWS + FAIL, error: e });
+        dispatch({ type: LOAD_DISHES + FAIL, error: e });
       });
   }
 };
