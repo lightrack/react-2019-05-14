@@ -2,25 +2,21 @@ import React from "react";
 import "./App.css";
 import { Layout, Menu } from "antd";
 import CartBadge from "./components/cart-badge";
-import {
-  BrowserRouter,
-  Route,
-  NavLink,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 import ListPage from "./components/routes/list";
 import MapPage from "./components/routes/map";
 import MenuPage from "./components/routes/menu";
 import Counter from "./components/counter";
 import OrderPage from "./components/routes/order";
 import OrderCompletePage from "./components/routes/order-complete";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "./history";
 
 const { Header, Content, Footer } = Layout;
 
 function App() {
   return (
-    <BrowserRouter>
+    <ConnectedRouter history={history}>
       <Layout className="App">
         <Header className="header">
           <Menu theme="dark" mode="horizontal" style={{ lineHeight: "64px" }}>
@@ -53,12 +49,24 @@ function App() {
             />
             <Route path={"/order-complete"} component={OrderCompletePage} />
             <Route path={"/order"} component={OrderPage} />
-            <Route path={"/"} render={() => <h2>Page not found</h2>} />
+            <Route path={"/error"} render={() => <h2>Error page</h2>} />
+            <Route
+              path={"/"}
+              exact
+              children={props => {
+                if (props.match) {
+                  console.log("matched");
+                  return <h2>Page not found</h2>;
+                } else {
+                  console.log("not matched");
+                }
+              }}
+            />
           </Switch>
         </Content>
         <Footer>{/*<Counter />*/}</Footer>
       </Layout>
-    </BrowserRouter>
+    </ConnectedRouter>
   );
 }
 

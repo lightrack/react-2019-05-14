@@ -3,11 +3,9 @@ import Dish from "../dish";
 import { Row, Col, Spin } from "antd";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import {
   createDishesSelector,
   dishesLoadedSelector,
-  dishesErrorSelector,
   dishesLoadingSelector,
   restaurantsLoadedSelector,
   restaurantsLoadingSelector
@@ -24,9 +22,6 @@ function RestaurantMenu(props) {
       props.loadRestaurants();
     }
   });
-  if (props.isDishesLoadingFailed) {
-    return <Redirect to={"/restaurants"} />;
-  }
   return (
     <div data-automation-id="menu" className="restaurant-menu">
       <Row gutter={16}>
@@ -58,7 +53,6 @@ const initMapStateToProps = () => {
       menu: dishSelector(state, ownProps).map(dish => dish.id),
       isDishesLoading: dishesLoadingSelector(state),
       isDishesLoaded: dishesLoadedSelector(state),
-      isDishesLoadingFailed: dishesErrorSelector(state),
       isRestaurantLoading: restaurantsLoadingSelector(state),
       isRestaurantLoaded: restaurantsLoadedSelector(state)
     };

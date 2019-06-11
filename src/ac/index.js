@@ -15,6 +15,7 @@ import {
   SEND_ORDER
 } from "../constants";
 import { cartSelector } from "../selectors";
+import { push, replace } from "connected-react-router";
 
 export const increase = () => ({
   type: INCREMENT
@@ -74,9 +75,12 @@ export const loadDishes = id => (dispatch, getState) => {
     fetch(`http://localhost:3001/api/dishes?id=${id}`)
       .then(res => res.json())
       .then(data => {
-        data.error
-          ? dispatch({ type: LOAD_DISHES + FAIL, error: data.error })
-          : dispatch({ type: LOAD_DISHES + SUCCESS, response: data });
+        if (data.error) {
+          dispatch({ type: LOAD_DISHES + FAIL, error: data.error });
+          dispatch(replace("/error"));
+        } else {
+          dispatch({ type: LOAD_DISHES + SUCCESS, response: data });
+        }
       })
       .catch(e => {
         dispatch({ type: LOAD_DISHES + FAIL, error: e });
@@ -109,11 +113,16 @@ export const loadAllDataForReviews = () => (dispatch, getState) => {
 };
 
 export const sendOrder = order => (dispatch, getState) => {
-  dispatch({
-    type: SEND_ORDER,
-    payload: {
-      ...order,
-      dishes: cartSelector(getState())
-    }
-  });
+  try {
+    dispatch({
+      type: SEND_ORDER,
+      payload: {
+        ...order,
+        dishes: cartSelector(getState())
+      }
+    });
+    dispatch(push("/order-complete"));
+  } catch (e) {
+    dispatch(push("/error"));
+  }
 };
