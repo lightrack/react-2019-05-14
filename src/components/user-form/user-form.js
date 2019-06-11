@@ -48,6 +48,10 @@ class UserForm extends Component {
     this.setState({
       name: e.target.value
     });
+    this.props.setUser &&
+      this.props.setUser({
+        name: e.target.value
+      });
   };
 
   handlePhoneChange = e => {

@@ -6,7 +6,7 @@ function OrderPage(props) {
   return (
     <div>
       <OrderList />
-      <UserForm />
+      <UserForm setUser={props.setUser} />
     </div>
   );
 }

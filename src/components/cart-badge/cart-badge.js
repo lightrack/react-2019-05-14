@@ -5,6 +5,7 @@ import "./cart-badge.css";
 import { connect } from "react-redux";
 import { cartAmountSelector } from "../../selectors";
 import { Link } from "react-router-dom";
+import { Consumer as UserConsumer } from "../../contexts/user";
 
 function CartBadge(props) {
   return (
@@ -17,6 +18,7 @@ function CartBadge(props) {
           className="cart-button"
         />
       </Link>
+      <UserConsumer>{userValue => console.log(userValue.name)}</UserConsumer>
     </Badge>
   );
 }
