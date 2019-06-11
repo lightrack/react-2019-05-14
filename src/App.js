@@ -2,7 +2,13 @@ import React from "react";
 import "./App.css";
 import { Layout, Menu } from "antd";
 import CartBadge from "./components/cart-badge";
-import { BrowserRouter, Route, NavLink, Switch } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  NavLink,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import ListPage from "./components/routes/list";
 import MapPage from "./components/routes/map";
 import MenuPage from "./components/routes/menu";
@@ -36,6 +42,7 @@ function App() {
         </Header>
         <Content>
           <Switch>
+            <Redirect from={"/"} exact to={"/restaurants"} />
             <Route path={"/restaurants"} component={ListPage} />
             <Route path={"/restaurants/counter"} component={Counter} />
             <Route path={"/restaurant-map/:restaurantId"} component={MapPage} />
