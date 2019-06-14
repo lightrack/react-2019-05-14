@@ -6,6 +6,7 @@ import { toggleVisibility } from "../../decorators/toggleVisibility";
 import * as PropTypes from "prop-types";
 import "./restaurant.css";
 import { NavLink } from "react-router-dom";
+import i18n from "../../decorators/i18n";
 
 class Restaurant extends PureComponent {
   state = {
@@ -23,11 +24,12 @@ class Restaurant extends PureComponent {
       image,
       name,
       isOpen: isReviewOpen,
-      toggleVisibility
+      toggleVisibility,
+      t
     } = this.props;
 
     return this.state.error ? (
-      "Not available"
+      t("not available")
     ) : (
       <>
         <List.Item
@@ -38,16 +40,16 @@ class Restaurant extends PureComponent {
               data-automation-id={`toggle-review-list-${id}`}
               onClick={toggleVisibility}
             >
-              {isReviewOpen ? "Hide reviews" : "Show reviews"}
+              {isReviewOpen ? t("hide reviews") : t("show reviews")}
             </Button>,
             <Button
               data-automation-id={`toggle-menu-${id}`}
               onClick={this.handleToggleOpenClick}
             >
-              <NavLink to={`/restaurant-menu/${id}`}>Go to menu</NavLink>
+              <NavLink to={`/restaurant-menu/${id}`}>{t("go to menu")}</NavLink>
             </Button>,
             <Button>
-              <NavLink to={`/restaurant-map/${id}`}>Show on map</NavLink>
+              <NavLink to={`/restaurant-map/${id}`}>{t("show on map")}</NavLink>
             </Button>
           ]}
         >
@@ -76,7 +78,8 @@ Restaurant.propTypes = {
   toggleOpenMenu: PropTypes.func.isRequired,
 
   isOpen: PropTypes.bool,
-  toggleVisibility: PropTypes.func.isRequired
+  toggleVisibility: PropTypes.func.isRequired,
+  t: PropTypes.func
 };
 
-export default toggleVisibility(Restaurant);
+export default toggleVisibility(i18n(Restaurant));

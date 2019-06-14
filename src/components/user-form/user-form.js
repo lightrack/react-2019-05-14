@@ -3,6 +3,7 @@ import { Form, Input, Button } from "antd";
 import "./user-form.css";
 import { sendOrder } from "../../ac";
 import { connect } from "react-redux";
+import i18n from "../../decorators/i18n";
 
 class UserForm extends Component {
   state = {
@@ -12,24 +13,25 @@ class UserForm extends Component {
   };
   render() {
     const { name, phone, address } = this.state;
+    const { t } = this.props;
     return (
       <Form className="user-form">
         <Form.Item
-          label="Name"
+          label={t("name")}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 14 }}
         >
           <Input value={name} onChange={this.handleNameChange} />
         </Form.Item>
         <Form.Item
-          label="Phone Number"
+          label={t("phone number")}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 14 }}
         >
           <Input value={phone} onChange={this.handlePhoneChange} />
         </Form.Item>
         <Form.Item
-          label="Address"
+          label={t("address")}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 14 }}
         >
@@ -37,7 +39,7 @@ class UserForm extends Component {
         </Form.Item>
         <Form.Item className="user-form-submit-section">
           <Button type="primary" htmlType="submit" onClick={this.submit}>
-            Send order
+            {t("send order")}
           </Button>
         </Form.Item>
       </Form>
@@ -75,4 +77,4 @@ class UserForm extends Component {
 export default connect(
   null,
   { sendOrder }
-)(UserForm);
+)(i18n(UserForm));
