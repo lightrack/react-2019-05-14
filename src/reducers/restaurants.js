@@ -1,6 +1,7 @@
 import {
   ADD_REVIEW,
   FAIL,
+  LOAD_DISHES,
   LOAD_RESTAURANTS,
   START,
   SUCCESS
@@ -11,11 +12,18 @@ const initialState = {
   loaded: false,
   loading: false,
   error: null,
+  dishesLoadedFor: {},
   entities: []
 };
 
 export default (restaurantsState = fromJS(initialState), action) => {
   switch (action.type) {
+    case LOAD_DISHES + SUCCESS: {
+      return restaurantsState.setIn(
+        ["dishesLoadedFor", action.payload.restaurantId],
+        true
+      );
+    }
     case LOAD_RESTAURANTS + START: {
       return restaurantsState.set("loading", true);
     }

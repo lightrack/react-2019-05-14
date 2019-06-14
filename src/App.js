@@ -14,12 +14,15 @@ import { history } from "./history";
 import { Provider as UserProvider } from "./contexts/user";
 import LangSelect from "./components/lang-select";
 import { Provider as LangProvider } from "./contexts/i18n";
+import { createTranslate } from "./decorators/i18n";
+import dictionaries from "./dictionaries";
 
 const { Header, Content, Footer } = Layout;
 
 function App() {
   const [user, setUser] = useState({ name: "default name" });
   const [lang, setLang] = useState("en");
+  const t = createTranslate(dictionaries[lang]);
   return (
     <LangProvider value={lang}>
       <UserProvider value={user}>
@@ -36,7 +39,7 @@ function App() {
                     to={"/restaurants"}
                     activeStyle={{ color: "lightgrey" }}
                   >
-                    List
+                    {t("list")}
                   </NavLink>
                 </Menu.Item>
                 <Menu.Item>
@@ -44,7 +47,7 @@ function App() {
                     to={"/restaurant-map"}
                     activeStyle={{ color: "lightgrey" }}
                   >
-                    Map
+                    {t("map")}
                   </NavLink>
                 </Menu.Item>
                 <CartBadge />

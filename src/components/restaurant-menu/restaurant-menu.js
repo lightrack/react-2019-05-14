@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   createDishesSelector,
+  dishesLoadedForRestaurant,
   dishesLoadedSelector,
   dishesLoadingSelector,
   restaurantsLoadedSelector,
@@ -15,7 +16,7 @@ import "./restaurant-menu.css";
 
 function RestaurantMenu(props) {
   useEffect(() => {
-    if (!props.isDishesLoading && !props.isDishesLoaded) {
+    if (!props.isDishesLoading && !props.isDishesLoadedForRestaurant) {
       props.loadDishes(props.id);
     }
     if (!props.isRestaurantLoading && !props.isRestaurantLoaded) {
@@ -25,7 +26,7 @@ function RestaurantMenu(props) {
   return (
     <div data-automation-id="menu" className="restaurant-menu">
       <Row gutter={16}>
-        {props.isDishesLoaded ? (
+        {props.isDishesLoadedForRestaurant ? (
           props.menu.map(dishId => (
             <Col key={dishId} span={8}>
               <Dish id={dishId} />
@@ -54,7 +55,8 @@ const initMapStateToProps = () => {
       isDishesLoading: dishesLoadingSelector(state),
       isDishesLoaded: dishesLoadedSelector(state),
       isRestaurantLoading: restaurantsLoadingSelector(state),
-      isRestaurantLoaded: restaurantsLoadedSelector(state)
+      isRestaurantLoaded: restaurantsLoadedSelector(state),
+      isDishesLoadedForRestaurant: dishesLoadedForRestaurant(state, ownProps)
     };
   };
 };

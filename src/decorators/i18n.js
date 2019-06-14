@@ -12,6 +12,6 @@ const i18n = OriginalComponent => props => {
   );
 };
 
-const createTranslate = dictionary => text => dictionary[text] || text;
+export const createTranslate = dictionary => text => dictionary[text] || text;
 
 export default i18n;

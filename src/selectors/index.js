@@ -13,6 +13,8 @@ export const restaurantsLoadingSelector = state =>
   state.restaurants.get("loading");
 export const restaurantsLoadedSelector = state =>
   state.restaurants.get("loaded");
+export const restaurantsDishesLoadedSelector = state =>
+  state.restaurants.get("dishesLoadedFor").toJS();
 
 export const reviewsLoadingSelector = state => state.reviews.get("loading");
 export const reviewsLoadedSelector = state => state.reviews.loaded;
@@ -129,6 +131,14 @@ export const createReviewsSelector = () =>
         .filter(Boolean);
     }
   );
+
+export const dishesLoadedForRestaurant = createSelector(
+  restaurantsDishesLoadedSelector,
+  idSelector,
+  (dishesLoadedFor, id) => {
+    return Boolean(dishesLoadedFor[id]);
+  }
+);
 
 export const createDishesSelector = () =>
   createSelector(

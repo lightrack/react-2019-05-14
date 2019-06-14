@@ -14,7 +14,7 @@ export default (dishesState = new ResourceRecord(), action) => {
         .set("loading", false)
         .set("loaded", true)
         .set("error", null)
-        .set("entities", arrToMap(action.response));
+        .mergeIn(["entities"], arrToMap(action.response));
     }
     case LOAD_DISHES + FAIL: {
       return dishesState

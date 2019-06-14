@@ -13,7 +13,9 @@ export const en = {
   "phone number": "Phone number",
   address: "Address",
   "send order": "Send order",
-  "thanks for your order": "Thanks for your order"
+  "thanks for your order": "Thanks for your order",
+  list: "List",
+  map: "Map"
 };
 
 export const ru = {
@@ -31,7 +33,9 @@ export const ru = {
   "phone number": "Номер телефона",
   address: "Адрес",
   "send order": "Отправить заказ",
-  "thanks for your order": "Спасибо за ваш заказ"
+  "thanks for your order": "Спасибо за ваш заказ",
+  list: "Список",
+  map: "Карта"
 };
 
 export default { ru, en };
